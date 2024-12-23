@@ -1,0 +1,9 @@
+name: Maple
+version: '1.0-SNAPSHOT'
+main: team.azalea.maple.MaplePlugin
+api-version: '1.21'
+authors: [ Azalea Team ]
+description: Core utilities for servers under the Azalea network. Manages punishments, chat filtering, and other things.
+website: https://azalea.team/
+libraries:
+  - org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.1.0
