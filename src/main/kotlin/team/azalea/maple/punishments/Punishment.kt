@@ -58,34 +58,42 @@ private fun getNumericValue(input: String): Pair<Int, String> {
 }
 
 /**
- *  Converts a duration string to seconds.
+ * Converts a duration string to seconds.
  *
- *  @param input Duration string (ex: "1h")
- *  @return Duration in seconds
+ * @param input Duration string (e.g., "1h")
+ * @return Duration in seconds
  */
 fun convertDate(input: String): Long {
-    if(input.lowercase() == "forever") return Instant.MAX.epochSecond
+    if (input.lowercase() == "forever") return Instant.MAX.epochSecond
 
     val (numericValue, timeUnit) = getNumericValue(input)
+    val timeUnits = timeUnits()
 
+    val secondValue = timeUnits[timeUnit]
+        ?: throw IllegalArgumentException("Invalid time unit specified: $timeUnit")
+
+    return numericValue * secondValue
+}
+
+/**
+ * Provides a map of time unit labels to their corresponding values in seconds.
+ *
+ * @return Map of time unit labels to seconds
+ */
+fun timeUnits(): Map<String, Long> {
     val minute = 60L
     val hour = minute * 60
     val day = hour * 24
     val week = day * 7
     val month = week * 4
 
-    val timeUnits: Map<String, Long> = mapOf(
+    return mapOf(
         "min" to minute,
         "h" to hour,
         "d" to day,
         "w" to week,
         "mo" to month
     )
-
-    val secondValue =
-        timeUnits[timeUnit] ?: throw IllegalArgumentException("Invalid time unit specified $timeUnit")
-
-    return numericValue * secondValue
 }
 
 /**
@@ -179,6 +187,30 @@ data class PunishmentData(
             )
         """.trimIndent()
     }
+
+    /**
+     *  Converts the data to a punishment object.
+     *
+     *  @return A Punishment object
+     */
+    fun getClass(): Punishment {
+        val moderatorUUID = UUID.fromString(this.moderator)
+        val playerUUID = UUID.fromString(this.player)
+
+        val moderator = User(moderatorUUID, Bukkit.getOfflinePlayer(moderatorUUID).name ?: "Console")
+        val target = User(playerUUID, Bukkit.getOfflinePlayer(playerUUID).name ?: "Unknown")
+
+        val duration = secondsToDuration(this.duration)
+
+        return Punishment(
+            moderator = moderator,
+            player = target,
+            reason = this.reason,
+            type = PunishmentTypes.entries[this.type],
+            duration = duration,
+            notes = this.notes ?: "",
+        )
+    }
 }
 
 /**
@@ -198,6 +230,28 @@ fun getReasonInfo(reason: String): Pair<String, String> {
     }
 
     return Pair(shortReason, longReason)
+}
+
+
+/**
+ * Converts a duration in seconds to a human-readable duration string.
+ *
+ * @param seconds Duration in seconds (e.g., 3600)
+ * @return Duration string (e.g., "1h")
+ */
+fun secondsToDuration(seconds: Long): String {
+    if (seconds == Long.MAX_VALUE) return "forever"
+
+    val timeUnits = timeUnits().entries.sortedByDescending { it.value }
+
+    for ((unitLabel, unitSeconds) in timeUnits) {
+        if (seconds >= unitSeconds) {
+            val value = seconds / unitSeconds
+            return "$value$unitLabel"
+        }
+    }
+
+    return "${seconds}s"
 }
 
 /**
@@ -330,7 +384,9 @@ data class Punishment(
      *
      *  example: "1h" -> "1 hour"
      */
-    private fun getFormattedDuration(): String {
+    fun getFormattedDuration(): String {
+        println("Getting formatted duration for ${this.duration}")
+
         if(this.duration.lowercase() == "forever") return "forever"
 
         val (numericValue, timeUnit) = getNumericValue(this.duration)

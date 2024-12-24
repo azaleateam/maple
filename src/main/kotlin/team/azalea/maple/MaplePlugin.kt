@@ -6,6 +6,7 @@ import me.honkling.commando.spigot.SpigotListenerManager
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.GameMode
 import org.bukkit.plugin.java.JavaPlugin
+import team.azalea.maple.listener.PlayerChatListener
 import team.azalea.maple.punishments.Punishments
 import team.azalea.maple.types.GamemodeType
 import team.azalea.maple.util.MapleMiniMessage
@@ -35,11 +36,20 @@ class MaplePlugin : SuspendingJavaPlugin() {
         miniMessage = MapleMiniMessage().build()
 
         Punishments.setup()
+        registerListeners()
 
         logger.info("Maple has been enabled! 🍁")
     }
 
     private fun registerTypes(manager: SpigotCommandManager) {
         manager.types[GameMode::class.java] = GamemodeType
+    }
+
+    /**
+     * used for listeners that require changes to the event handler
+     * as commando has hardcoded listeners
+     */
+    private fun registerListeners() {
+        server.pluginManager.registerEvents(PlayerChatListener(), this)
     }
 }

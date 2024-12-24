@@ -3,7 +3,6 @@ package team.azalea.maple.punishments
 import cc.ekblad.toml.decode
 import cc.ekblad.toml.tomlMapper
 import gg.ingot.iron.Iron
-import gg.ingot.iron.bindings.bind
 import gg.ingot.iron.strategies.NamingStrategy
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -84,8 +83,8 @@ object Punishments {
 
     suspend fun list(player: UUID): List<PunishmentData> {
         return iron.prepare("""
-            SELECT * FROM punishments
-        """.trimIndent()
+            SELECT * FROM punishments WHERE player = ?
+        """.trimIndent(), player.toString()
         ).all<PunishmentData>()
     }
 
