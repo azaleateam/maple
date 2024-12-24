@@ -35,15 +35,22 @@ reload = "{success} Reloaded translations!"
 
 [en.punishments]
 playerBanned = """
-    woah u were banned from the server by {moderator}
+        <s>You are banned for <error>{short_reason} <#B0B0B0>[{duration}]<s>.
+
+        <p>Description:<s> {long_reason}
+
+        <s>If you believe this is false, you may appeal on our {discord} <s>server in the <p>#tickets <s>channel.
 """
-
-[en.punishments.commands.ban]
-alreadyBanned = "{error} {target} is already banned!"
-
-[en.punishments.commands.mute]
 playerMuted = """
         {error} {full_reason} <#B0B0B0>[{duration}]<s>.
 
         <s>If you believe this is false, you may appeal on our {discord} <s>server in the <p>#tickets <s>channel.
 """
+playerKicked = """
+        <s>You were kicked for <error>{short_reason}<s>.
+
+        <p>Description:<s> {long_reason}
+"""
+
+[en.punishments.commands.ban]
+alreadyBanned = "{error} {target} is already banned!"

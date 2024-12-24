@@ -31,7 +31,7 @@ class PlayerChatListener : Listener {
             )
 
             player.sendKey(
-                "punishments.commands.mute.playerMuted",
+                "punishments.playerMuted",
                 placeholders
             )
         }
