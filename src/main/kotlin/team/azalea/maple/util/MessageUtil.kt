@@ -10,6 +10,8 @@ class MessageUtil private constructor(private val translations: Toml) {
         return formatted
     }
 
+    fun getString(key: String): String = translations.getString("en.$key") ?: key
+
     fun getColors(): Map<String, Any> = translations.getTable("colors").toMap()
 
     fun getCustomPlaceholders(): Map<String, Any> = translations.getTable("custom_placeholders").toMap()

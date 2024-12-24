@@ -3,6 +3,7 @@
 package team.azalea.maple.commands
 
 import me.honkling.commando.common.annotations.Command
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import team.azalea.maple.messageUtil
 import team.azalea.maple.miniMessage
@@ -14,7 +15,7 @@ fun maple(player: Player) {
     player.sendKey("commands.maple.base")
 }
 
-fun reload(player: Player) {
+fun reload(player: CommandSender) {
     messageUtil = MessageUtil.initialize()
     miniMessage = MapleMiniMessage().build()
 

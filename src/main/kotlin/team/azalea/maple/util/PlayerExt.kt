@@ -1,9 +1,9 @@
 package team.azalea.maple.util
 
-import org.bukkit.entity.Player
+import org.bukkit.command.CommandSender
 import team.azalea.maple.messageUtil
 
-fun Player.sendKey(key: String, placeholders: Map<String, String> = emptyMap()) {
+fun CommandSender.sendKey(key: String, placeholders: Map<String, String> = emptyMap()) {
     this.sendMessage(messageUtil.translate(key, placeholders).trimIndent().mm())
 }
 
@@ -13,6 +13,6 @@ fun Player.sendKey(key: String, placeholders: Map<String, String> = emptyMap()) 
     example: player.sendKey("hello.world", "x" to y)
     rather than: player.sendKey("hello.world", mapOf("x" to y))
 */
-fun Player.sendKey(key: String, placeholders: Pair<String, String>) {
+fun CommandSender.sendKey(key: String, placeholders: Pair<String, String>) {
     this.sendKey(key, mapOf(placeholders.first to placeholders.second))
 }
