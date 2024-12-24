@@ -1,5 +1,6 @@
 package team.azalea.maple.punishments
 
+import cc.ekblad.toml.decode
 import cc.ekblad.toml.tomlMapper
 import gg.ingot.iron.Iron
 import gg.ingot.iron.bindings.bind
@@ -90,12 +91,12 @@ object Punishments {
     fun setup() {
         maplePlugin.dataFolder.mkdirs()
         val configFile = maplePlugin.dataFolder.resolve("punishments.toml")
+
         if (!configFile.exists()) {
             maplePlugin.saveResource(configFile.name, false)
         }
-        punishmentConfig = PunishmentsConfig(
-            punishments = mapOf()
-        )
+
+        punishmentConfig = mapper.decode(configFile.readText())
 
         commandManager.registerCommands("team.azalea.maple.punishments.commands")
         listenerManager.registerListeners("team.azalea.maple.punishments.listener")
