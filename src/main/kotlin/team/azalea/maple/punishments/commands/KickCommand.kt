@@ -3,7 +3,7 @@
     description = "Kicks a player",
     aliases = ["k"],
     usage = "kick <player> <reason> [notes]",
-    permission = "maple.staff.kick",
+    permission = "maple.staff.punishments.kick",
 )
 
 package team.azalea.maple.punishments.commands

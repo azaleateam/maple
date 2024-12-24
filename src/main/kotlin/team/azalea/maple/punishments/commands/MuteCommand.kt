@@ -3,7 +3,7 @@
     description = "Mutes a player",
     aliases = ["m"],
     usage = "mute <player> <reason> <duration> [notes]",
-    permission = "maple.staff.mute",
+    permission = "maple.staff.punishments.mute",
 )
 
 package team.azalea.maple.punishments.commands

@@ -3,7 +3,7 @@
     description = "Bans a player",
     aliases = ["b"],
     usage = "ban <player> <reason> <duration> [notes]",
-    permission = "maple.staff.ban",
+    permission = "maple.staff.punishments.ban",
 )
 
 package team.azalea.maple.punishments.commands
