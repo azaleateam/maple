@@ -1,4 +1,4 @@
-package team.azalea.maple
+package team.azalea.maple.ext
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextDecoration

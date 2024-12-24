@@ -18,6 +18,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.3-R0.1-SNAPSHOT")
     implementation("com.github.honkling.commando:spigot:b0ff9a152d")
     implementation("com.github.honkling:Pocket:ea9e90511b")
+    implementation("com.moandjiezana.toml:toml4j:0.7.2")
 }
 
 tasks.withType<ShadowJar> {
@@ -28,4 +29,8 @@ tasks.withType<ShadowJar> {
 
 kotlin {
     jvmToolchain(21)
+}
+
+tasks.shadowJar {
+    archiveFileName.set("Maple.jar")
 }

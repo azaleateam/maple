@@ -6,21 +6,22 @@ import me.honkling.commando.common.annotations.Command
 import me.honkling.commando.common.annotations.Optional
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
+import team.azalea.maple.ext.sendKey
 
 fun gmsp(player: Player, @Optional target: Player?) {
     val targetPlayer = target ?: player
 
     if (targetPlayer.gameMode == GameMode.SPECTATOR) {
         when (targetPlayer.uniqueId) {
-            player.uniqueId -> player.sendMessage("You're already in spectator mode!")
-            else -> player.sendMessage("${targetPlayer.name} is already in spectator mode!")
+            player.uniqueId -> player.sendKey("commands.gamemode.alreadySelf", "spectator")
+            else -> player.sendKey("commands.gamemode.alreadyOther", targetPlayer.name, "spectator")
         }
         return
     }
 
     targetPlayer.gameMode = GameMode.SPECTATOR
     when (targetPlayer.uniqueId) {
-        player.uniqueId -> player.sendMessage("You've switched to spectator mode!")
-        else -> player.sendMessage("${targetPlayer.name} has switched to spectator mode!")
+        player.uniqueId -> player.sendKey("commands.gamemode.self", "spectator")
+        else -> player.sendKey("commands.gamemode.other", targetPlayer.name, "spectator")
     }
 }

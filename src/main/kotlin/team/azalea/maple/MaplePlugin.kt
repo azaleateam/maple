@@ -6,6 +6,8 @@ import org.bukkit.GameMode
 import org.bukkit.plugin.java.JavaPlugin
 import team.azalea.maple.types.GamemodeType
 
+val instance = JavaPlugin.getPlugin(MaplePlugin::class.java)
+
 class MaplePlugin : JavaPlugin() {
     override fun onEnable() {
         val listenerManager = SpigotListenerManager(this)

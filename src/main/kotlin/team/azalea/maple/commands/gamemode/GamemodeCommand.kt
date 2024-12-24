@@ -6,14 +6,15 @@ import me.honkling.commando.common.annotations.Command
 import me.honkling.commando.common.annotations.Optional
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
+import team.azalea.maple.ext.sendKey
 
 fun gamemode(player: Player, mode: GameMode, @Optional target: Player?) {
     val targetPlayer = target ?: player
 
     if (targetPlayer.gameMode == mode) {
         when (targetPlayer.uniqueId) {
-            player.uniqueId -> player.sendMessage("You're already in ${mode.name.lowercase()} mode!")
-            else -> player.sendMessage("${targetPlayer.name} is already in ${mode.name.lowercase()} mode!")
+            player.uniqueId -> player.sendKey("commands.gamemode.alreadySelf", mode.name.lowercase())
+            else -> player.sendKey("commands.gamemode.alreadyOther", targetPlayer.name, mode.name.lowercase())
         }
         return
     }
@@ -26,7 +27,7 @@ fun gamemode(player: Player, mode: GameMode, @Optional target: Player?) {
     }
 
     when (targetPlayer.uniqueId) {
-        player.uniqueId -> player.sendMessage("You've switched to ${mode.name.lowercase()} mode!")
-        else -> player.sendMessage("${targetPlayer.name} has switched to ${mode.name.lowercase()} mode!")
+        player.uniqueId -> player.sendKey("commands.gamemode.self", mode.name.lowercase())
+        else -> player.sendKey("commands.gamemode.other", targetPlayer.name, mode.name.lowercase())
     }
 }

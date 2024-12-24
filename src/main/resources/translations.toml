@@ -1,0 +1,20 @@
+[en.commands.fly]
+self = "You're now able to fly!"
+other = "%s is now able to fly!"
+
+[en.commands.flyspeed]
+self = "You've set your fly speed to %s!"
+other = "You've set the fly speed of %s to %s!"
+invalid = "Invalid speed! Please use a value between -10 and 10."
+
+[en.commands.gamemode]
+self = "You've switched to %s mode!"
+other = "%s has switched to %s mode!"
+alreadySelf = "You're already in %s mode!"
+alreadyOther = "%s is already in %s mode!"
+
+[en.commands.maple]
+base = """
+    Maple Core - by azalea.team
+"""
+reload = "Reloaded translations!"
