@@ -59,13 +59,13 @@ object Punishments {
             reason = reason,
             type = type,
             duration = duration,
-            notes = notes,
             active = if(active) 1 else 0,
+            notes = notes,
         )
 
         iron.prepare("""
-            INSERT INTO punishments (id, moderator, player, reason, type, created_at, updated_at, duration, active)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO punishments (id, moderator, player, reason, type, created_at, updated_at, duration, active, notes)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """.trimIndent(),
             punishment.id,
             punishment.moderator,
@@ -76,6 +76,7 @@ object Punishments {
             punishment.updatedAt,
             punishment.duration,
             punishment.active,
+            punishment.notes,
         )
 
         return punishment
