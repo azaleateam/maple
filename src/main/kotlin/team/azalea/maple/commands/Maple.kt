@@ -4,15 +4,19 @@ package team.azalea.maple.commands
 
 import me.honkling.commando.common.annotations.Command
 import org.bukkit.entity.Player
-import team.azalea.maple.Translations
-import team.azalea.maple.ext.sendKey
-
+import team.azalea.maple.messageUtil
+import team.azalea.maple.miniMessage
+import team.azalea.maple.util.MapleMiniMessage
+import team.azalea.maple.util.MessageUtil
+import team.azalea.maple.util.sendKey
 
 fun maple(player: Player) {
     player.sendKey("commands.maple.base")
 }
 
 fun reload(player: Player) {
-    Translations.reload()
+    messageUtil = MessageUtil.initialize()
+    miniMessage = MapleMiniMessage().build()
+
     player.sendKey("commands.maple.reload")
 }

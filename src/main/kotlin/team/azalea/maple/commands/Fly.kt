@@ -5,7 +5,7 @@ package team.azalea.maple.commands
 import me.honkling.commando.common.annotations.Command
 import me.honkling.commando.common.annotations.Optional
 import org.bukkit.entity.Player
-import team.azalea.maple.ext.sendKey
+import team.azalea.maple.util.sendKey
 
 fun fly(player: Player, @Optional target: Player?) {
     val targetPlayer = target ?: player
@@ -13,6 +13,6 @@ fun fly(player: Player, @Optional target: Player?) {
 
     when (targetPlayer.uniqueId) {
         player.uniqueId -> player.sendKey("commands.fly.self")
-        else -> player.sendKey("commands.fly.other", targetPlayer.name)
+        else -> player.sendKey("commands.fly.other", "target" to targetPlayer.name)
     }
 }

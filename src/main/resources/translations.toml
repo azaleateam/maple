@@ -1,20 +1,32 @@
+# custom minimessage color codes to use in messages
+[colors]
+p = "#EFEFEF"
+s = "#FBB13C"
+t = "#FF5700"
+br = "#742F04"
+
+[custom_placeholders]
+prefix = "<t>Maple <br>|<p>"
+error = "<#ff6e6e>❌<#ff7f6e>"
+success = "<#bfffc6>✔"
+
 [en.commands.fly]
-self = "You're now able to fly!"
-other = "%s is now able to fly!"
+self = "{success} You're now able to fly!"
+other = "{success} {target} is now able to fly!"
 
 [en.commands.flyspeed]
-self = "You've set your fly speed to %s!"
-other = "You've set the fly speed of %s to %s!"
-invalid = "Invalid speed! Please use a value between -10 and 10."
+self = "{success} You've set your fly speed to <b>{speed}</b>!"
+other = "{success} You've set the fly speed of {target} to {speed}!"
+invalid = "{error} Invalid speed! Please use a value between -10 and 10."
 
 [en.commands.gamemode]
-self = "You've switched to %s mode!"
-other = "%s has switched to %s mode!"
-alreadySelf = "You're already in %s mode!"
-alreadyOther = "%s is already in %s mode!"
+self = "{success} You've switched to {gamemode} mode!"
+other = "{success} {target} has switched to {gamemode} mode!"
+alreadySelf = "{error} You're already in {gamemode} mode!"
+alreadyOther = "{error} {target} is already in {gamemode} mode!"
 
 [en.commands.maple]
 base = """
-    Maple Core - by azalea.team
+    {prefix} Maple Core - by <t><click:OPEN_URL:https://azalea.team/>azalea.team</click></t>
 """
-reload = "Reloaded translations!"
+reload = "{success} Reloaded translations!"

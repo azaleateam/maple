@@ -6,22 +6,27 @@ import me.honkling.commando.common.annotations.Command
 import me.honkling.commando.common.annotations.Optional
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
-import team.azalea.maple.ext.sendKey
+import team.azalea.maple.util.sendKey
 
 fun gmsp(player: Player, @Optional target: Player?) {
     val targetPlayer = target ?: player
 
+    val placeholders = mapOf(
+        "target" to targetPlayer.name,
+        "gamemode" to "spectator"
+    )
+
     if (targetPlayer.gameMode == GameMode.SPECTATOR) {
         when (targetPlayer.uniqueId) {
-            player.uniqueId -> player.sendKey("commands.gamemode.alreadySelf", "spectator")
-            else -> player.sendKey("commands.gamemode.alreadyOther", targetPlayer.name, "spectator")
+            player.uniqueId -> player.sendKey("commands.gamemode.alreadySelf", placeholders)
+            else -> player.sendKey("commands.gamemode.alreadyOther", placeholders)
         }
         return
     }
 
     targetPlayer.gameMode = GameMode.SPECTATOR
     when (targetPlayer.uniqueId) {
-        player.uniqueId -> player.sendKey("commands.gamemode.self", "spectator")
-        else -> player.sendKey("commands.gamemode.other", targetPlayer.name, "spectator")
+        player.uniqueId -> player.sendKey("commands.gamemode.self", placeholders)
+        else -> player.sendKey("commands.gamemode.other", placeholders)
     }
 }
