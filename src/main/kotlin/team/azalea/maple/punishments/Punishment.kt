@@ -118,6 +118,7 @@ fun canPunish(uuid: UUID): Boolean {
  *  This class is used to represent a user when creating a punishment.//
  */
 data class User(val uuid: UUID, val name: String)
+val CONSOLE_USER = User(UUID(0, 0), "Console")
 
 /**
  *  A representation of a punishment within the database.

@@ -30,3 +30,11 @@ base = """
     {prefix} Maple Core - by <t><click:OPEN_URL:https://azalea.team/>azalea.team</click></t>
 """
 reload = "{success} Reloaded translations!"
+
+[en.punishments]
+playerBanned = """
+    woah u were banned from the server by {moderator}
+"""
+
+[en.punishments.commands.ban]
+alreadyBanned = "{error} That player is already banned!"
