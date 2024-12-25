@@ -234,6 +234,10 @@ data class PunishmentData(
     fun getUpdatedAt(): Instant {
         return Instant.ofEpochSecond(this.updatedAt)
     }
+
+    fun getPlayerUUID(): UUID {
+        return UUID.fromString(this.player)
+    }
 }
 
 /**

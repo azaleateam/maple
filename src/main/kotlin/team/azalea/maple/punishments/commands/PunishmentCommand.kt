@@ -53,7 +53,7 @@ fun punishment(
     val punishment = Punishments.get(id)
 
     if(punishment === null) {
-        player.sendKey("punishments.commands.view.invalidId", "id" to id)
+        player.sendKey("punishments.invalidId", "id" to id)
         return@launch
     }
 

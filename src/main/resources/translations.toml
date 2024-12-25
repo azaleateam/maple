@@ -36,6 +36,7 @@ base = """
 reload = "{success} Reloaded translations!"
 
 [en.punishments]
+invalidId = "{error} {id} is not a valid punishment ID!"
 playerBanned = """
         <s>You are banned for <error>{short_reason} <#B0B0B0>[{duration}]<s>.
 
@@ -58,7 +59,6 @@ playerKicked = """
 alreadyBanned = "{error} {target} is already banned!"
 
 [en.punishments.commands.view]
-invalidId = "{error} {id} is not a valid punishment ID!"
 all = """
             <pr>Username:</pr>
             {player}
@@ -92,3 +92,9 @@ reverted = """
             <pr>Reverted by:</pr>
             {reverted_by}
 """
+
+[en.punishments.commands.revert]
+provideMessage = "Provide a reason for reverting the punishment:"
+success = "{success} Successfully reverted the punishment!"
+error = "{error} {reason}"
+log = "<hover:show_text:'<s>View punishment'><click:run_command:/punishment {id}><gray><s>{moderator}</s> reverted <s>{player}</s> - <red>{reason}</red>"

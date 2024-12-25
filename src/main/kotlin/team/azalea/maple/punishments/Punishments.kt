@@ -3,6 +3,7 @@ package team.azalea.maple.punishments
 import cc.ekblad.toml.decode
 import cc.ekblad.toml.tomlMapper
 import gg.ingot.iron.Iron
+import gg.ingot.iron.bindings.bind
 import gg.ingot.iron.strategies.NamingStrategy
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -119,6 +120,28 @@ object Punishments {
         """.trimIndent(), id
         ).singleNullable<PunishmentData>()
     }
+
+    suspend fun revert(id: String, user: User, reason: String) {
+        val punishment = get(id) ?: throw IllegalArgumentException("Punishment with ID $id does not exist.")
+        if(punishment.active == 0) throw IllegalStateException("Punishment with ID $id is not active.")
+        if(punishment.revertedAt != null) throw IllegalStateException("Punishment with ID $id has already been reverted.")
+
+        iron.prepare("""
+            UPDATE punishments
+            SET 
+                reverted_by = :user, 
+                reverted_at = :time, 
+                reverted_reason = :reason,
+                active = 0
+            WHERE id = :id
+        """.trimIndent(), bind {
+            "user" to user.uuid
+            "time" to System.currentTimeMillis()
+            "reason" to reason
+            "id" to id
+        })
+    }
+
 
     /**
      * Sets up the punishment module by loading the config then registering commands and listeners.
