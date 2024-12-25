@@ -7,6 +7,7 @@ import gg.ingot.iron.strategies.NamingStrategy
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.bukkit.Bukkit
 import team.azalea.maple.commandManager
 import team.azalea.maple.listenerManager
 import team.azalea.maple.maplePlugin
@@ -43,6 +44,18 @@ object Punishments {
         }
     }
 
+    /**
+     *  Creates a new punishment.
+     *
+     *  @param moderator The UUID of the moderator
+     *  @param player The UUID of the player
+     *  @param reason The reason for the punishment
+     *  @param type The type of punishment
+     *  @param duration The duration of the punishment
+     *  @param notes The notes attached to the punishment
+     *  @param active Whether the punishment is active
+     *  @return A PunishmentData object representing the created punishment
+     */
     suspend fun create(
         moderator: UUID,
         player: UUID,
@@ -81,6 +94,12 @@ object Punishments {
         return punishment
     }
 
+    /**
+     *  Lists all punishments for a player.
+     *
+     *  @param player The UUID of the player
+     *  @return A list of PunishmentData objects
+     */
     suspend fun list(player: UUID): List<PunishmentData> {
         return iron.prepare("""
             SELECT * FROM punishments WHERE player = ?
@@ -88,6 +107,22 @@ object Punishments {
         ).all<PunishmentData>()
     }
 
+    /**
+     *  Gets a punishment by its ID.
+     *
+     *  @param id The ID of the punishment
+     *  @return A PunishmentData object
+     */
+    suspend fun get(id: String): PunishmentData? {
+        return iron.prepare("""
+            SELECT * FROM punishments WHERE id = ?
+        """.trimIndent(), id
+        ).singleNullable<PunishmentData>()
+    }
+
+    /**
+     * Sets up the punishment module by loading the config then registering commands and listeners.
+     */
     fun setup() {
         maplePlugin.dataFolder.mkdirs()
         val configFile = maplePlugin.dataFolder.resolve("punishments.toml")
@@ -100,5 +135,19 @@ object Punishments {
 
         commandManager.registerCommands("team.azalea.maple.punishments.commands")
         listenerManager.registerListeners("team.azalea.maple.punishments.listener")
+    }
+
+    /**
+     *  Gets a user from a UUID string.
+     *
+     *  @param uuid The UUID of the user
+     *  @return A User object
+     */
+    fun getPlayer(uuid: String): User {
+        val parsedUUID = UUID.fromString(uuid)
+        if(parsedUUID == CONSOLE_USER.uuid) return CONSOLE_USER
+
+        val username = Bukkit.getOfflinePlayer(parsedUUID).name
+        return User(parsedUUID, username ?: "Unknown")
     }
 }

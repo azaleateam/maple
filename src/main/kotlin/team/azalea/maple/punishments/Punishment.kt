@@ -1,5 +1,10 @@
 package team.azalea.maple.punishments
 
+/**
+ *  This file manages everything related to punishments.
+ *  It also functions as an SDK for punishment data
+ */
+
 import com.github.shynixn.mccoroutine.bukkit.minecraftDispatcher
 import gg.ingot.iron.annotations.Column
 import gg.ingot.iron.annotations.Model
@@ -210,6 +215,24 @@ data class PunishmentData(
             duration = duration,
             notes = this.notes ?: "",
         )
+    }
+
+    /**
+     *  Gets the created at timestamp of the punishment.
+     *
+     *  @return The created at timestamp
+     */
+    fun getCreatedAt(): Instant {
+        return Instant.ofEpochSecond(this.createdAt)
+    }
+
+    /**
+     *  Gets the updated at timestamp of the punishment.
+     *
+     *  @return The updated at timestamp
+     */
+    fun getUpdatedAt(): Instant {
+        return Instant.ofEpochSecond(this.updatedAt)
     }
 }
 

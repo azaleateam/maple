@@ -5,6 +5,8 @@ s = "#FBB13C"
 t = "#FF5700"
 br = "#742F04"
 error = "#FF6E6E"
+# purple for punishments
+pr = "#9248df"
 
 [custom_placeholders]
 prefix = "<t>Maple <br>|<p>"
@@ -54,3 +56,39 @@ playerKicked = """
 
 [en.punishments.commands.ban]
 alreadyBanned = "{error} {target} is already banned!"
+
+[en.punishments.commands.view]
+invalidId = "{error} {id} is not a valid punishment ID!"
+all = """
+            <pr>Username:</pr>
+            {player}
+
+            <pr>Punishments:</pr>
+            {punishments}
+"""
+overview = """
+            <pr>Username:</pr>
+            {player}
+            <pr>Punished by:</pr>
+            {moderator}
+
+            <pr>Punishment:</pr>
+            {reason} <em>{type_uppercase}</em>
+
+            <pr>Details:</pr>
+            <hover:show_text:'<p>Expires at'>Exp</hover>: {expires_at}
+            Status: {status_capitalized}
+
+                 <pr><hover:show_text:'<p>View all punishments of {player}'><click:run_command:/punishments {player}>Go back</hover> <gray>|</gray> <hover:show_text:'<p>Manage this punishment'><click:run_command:/editpunishment {id}>Edit</hover>
+"""
+notes = """
+            <pr>Notes:</pr>
+            {notes}
+"""
+reverted = """
+            <pr>Reverted:</pr>
+            {reverted_reason}
+
+            <pr>Reverted by:</pr>
+            {reverted_by}
+"""
