@@ -3,6 +3,7 @@ package team.azalea.maple
 import com.github.shynixn.mccoroutine.bukkit.SuspendingJavaPlugin
 import me.honkling.commando.spigot.SpigotCommandManager
 import me.honkling.commando.spigot.SpigotListenerManager
+import me.honkling.commonlib.CommonLib
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.GameMode
 import org.bukkit.plugin.java.JavaPlugin
@@ -39,6 +40,8 @@ class MaplePlugin : SuspendingJavaPlugin() {
         registerListeners()
 
         logger.info("Maple has been enabled! 🍁")
+
+        CommonLib(this)
     }
 
     private fun registerTypes(manager: SpigotCommandManager) {

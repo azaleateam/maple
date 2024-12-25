@@ -19,6 +19,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.3-R0.1-SNAPSHOT")
     implementation("com.github.honkling.commando:spigot:b0ff9a152d")
     implementation("com.github.honkling:Pocket:ea9e90511b")
+    implementation("com.github.honkling:commonlib:616d753")
 
     implementation("com.github.shynixn.mccoroutine:mccoroutine-bukkit-api:2.20.0")
     implementation("com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:2.20.0")
