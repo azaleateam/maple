@@ -25,9 +25,10 @@ dependencies {
     implementation("com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:2.20.0")
 
     /* database */
-    implementation("gg.ingot:iron:2.0.0-RC1")
-    ksp("gg.ingot.iron:processor:2.0.0-RC1")
+    implementation("gg.ingot:iron:f77a1ccb6a")
+    ksp("gg.ingot.iron:processor:f77a1ccb6a")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    compileOnly("org.flywaydb:flyway-core:10.16.0")
 
     /* used for translations w/ strings */
     compileOnly("com.moandjiezana.toml:toml4j:0.7.2")
@@ -43,10 +44,54 @@ tasks.withType<ShadowJar> {
     }
 }
 
+tasks.register("createMigration") {
+    doLast {
+
+        val timestamp = System.currentTimeMillis() / 1000
+        val path = "${timestamp}_.sql"
+
+        val migrationDir = File(project.projectDir.toString(), "src/main/resources/db/migration")
+        if (!migrationDir.exists()) {
+            migrationDir.mkdirs()
+        }
+
+        val migrationFile = File(migrationDir, path)
+        migrationFile.writeText(
+            """
+         |-- Create your migration here
+         |
+         |CREATE TABLE IF NOT EXISTS example (
+         |   id INTEGER PRIMARY KEY,
+         |   name TEXT
+         |);
+         |
+         |-- Seeding
+         |INSERT INTO example (id, name) VALUES (1, 'Hello');
+         """.trimMargin()
+        )
+    }
+}
+
 kotlin {
     jvmToolchain(21)
 }
 
 tasks.shadowJar {
     archiveFileName.set("Maple.jar")
+}
+
+tasks.named<ProcessResources>("processResources") {
+    // move migration files to the right place
+    val migrationDir = File(project.projectDir.toString(), "src/main/resources/db/migration")
+
+    if (migrationDir.exists()) {
+        val migrationFiles = migrationDir.listFiles()
+        filteringCharset = "UTF-8"
+        if (migrationFiles != null) {
+            for (file in migrationFiles) {
+                val target = File(project.buildDir, "resources/main/${file.name}")
+                file.copyTo(target, true)
+            }
+        }
+    }
 }

@@ -9,6 +9,7 @@ import com.github.shynixn.mccoroutine.bukkit.minecraftDispatcher
 import gg.ingot.iron.annotations.Column
 import gg.ingot.iron.annotations.Model
 import gg.ingot.iron.bindings.Bindings
+import gg.ingot.iron.strategies.NamingStrategy
 import kotlinx.coroutines.withContext
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
@@ -136,7 +137,7 @@ val CONSOLE_USER = User(UUID(0, 0), "Console")
 /**
  *  A representation of a punishment within the database.
  */
-@Model
+@Model(table = "punishments", naming = NamingStrategy.SNAKE_CASE)
 data class PunishmentData(
     @Column(primaryKey = true)
     /** The ID of the punishment */
@@ -151,10 +152,8 @@ data class PunishmentData(
      * The type of punishment, an ordinal value of the [PunishmentTypes] enum.
      * */
     val type: Int,
-    @Column(name = "created_at")
     /** The timestamp of when the punishment was created */
     val createdAt: Long = Instant.now().epochSecond,
-    @Column(name = "updated_at")
     /** The timestamp of when the punishment was last updated */
     val updatedAt: Long = createdAt,
     /** The duration of the punishment */
@@ -163,36 +162,13 @@ data class PunishmentData(
     var active: Int = 1,
     /** Any notes attached to the punishment */
     var notes: String? = null,
-    @Column(name = "reverted_by")
     /** The UUID of the user who reverted the punishment, if applicable */
     val revertedBy: String? = null,
-    @Column(name = "reverted_at")
     /** The timestamp of when the punishment was reverted, if applicable */
     val revertedAt: Long? = null,
-    @Column(name = "reverted_reason")
     /** The reason for the reversion, if applicable */
     val revertedReason: String? = null,
 ): Bindings {
-    companion object {
-        val tableDefinition = """
-            CREATE TABLE IF NOT EXISTS punishments (
-                id TEXT PRIMARY KEY,
-                moderator TEXT NOT NULL,
-                player TEXT NOT NULL,
-                reason TEXT NOT NULL,
-                type INTEGER NOT NULL,
-                created_at INTEGER NOT NULL,
-                updated_at INTEGER NOT NULL,
-                duration INTEGER NOT NULL,
-                active INTEGER NOT NULL,
-                notes TEXT,
-                reverted_by TEXT,
-                reverted_at INTEGER,
-                reverted_reason TEXT
-            )
-        """.trimIndent()
-    }
-
     /**
      *  Converts the data to a punishment object.
      *
