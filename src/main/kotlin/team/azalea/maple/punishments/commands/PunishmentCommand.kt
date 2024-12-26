@@ -101,7 +101,7 @@ fun punishment(
         val notesPage = messageUtil
             .translate(
                 "punishments.commands.view.notes",
-                placeholders.plus("notes" to notes)
+                placeholders.plus("notes" to notes.replace("\n", "<newline>"))
             )
             .trimIndent()
             .replaceTabs()
