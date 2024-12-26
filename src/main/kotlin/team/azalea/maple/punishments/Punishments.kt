@@ -2,10 +2,9 @@ package team.azalea.maple.punishments
 
 import cc.ekblad.toml.decode
 import cc.ekblad.toml.tomlMapper
-import gg.ingot.iron.Iron
 import gg.ingot.iron.bindings.bind
 import org.bukkit.Bukkit
-import org.flywaydb.core.Flyway
+import team.azalea.maple.Database
 import team.azalea.maple.commandManager
 import team.azalea.maple.listenerManager
 import team.azalea.maple.maplePlugin
@@ -29,29 +28,7 @@ lateinit var punishmentConfig: PunishmentsConfig
 
 object Punishments {
     private val mapper = tomlMapper {}
-
-    private val dataFolder = maplePlugin.dataFolder.resolve("data")
-
-    private val iron = Iron("jdbc:sqlite:${dataFolder.absolutePath}/punishments.db")
-
-    init {
-        if (!dataFolder.exists()) dataFolder.mkdirs()
-        iron.connect()
-    }
-
-    /**
-     * Applies all migrations to the database
-     */
-    private fun migrate() {
-        Flyway.configure(maplePlugin.javaClass.classLoader)
-            .dataSource(iron.pool)
-            .locations("classpath:db/migration")
-            .sqlMigrationPrefix("")
-            .sqlMigrationSeparator("_")
-            .outOfOrder(true)
-            .load()
-            .migrate()
-    }
+    private val iron = Database.getIron()
 
     /**
      *  Creates a new punishment.
@@ -243,8 +220,6 @@ object Punishments {
         }
 
         punishmentConfig = mapper.decode(configFile.readText())
-
-        migrate()
 
         commandManager.types[PunishmentShort::class.java] = PunishmentType
 

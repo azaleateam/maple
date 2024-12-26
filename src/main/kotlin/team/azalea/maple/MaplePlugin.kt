@@ -26,6 +26,8 @@ lateinit var listenerManager: SpigotListenerManager
 
 class MaplePlugin : SuspendingJavaPlugin() {
     override fun onEnable() {
+        Database.migrate()
+
         listenerManager = SpigotListenerManager(this)
         listenerManager.registerListeners("team.azalea.maple.listener")
 
