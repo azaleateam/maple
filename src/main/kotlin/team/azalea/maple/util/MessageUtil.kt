@@ -1,19 +1,60 @@
 package team.azalea.maple.util
 
 import com.moandjiezana.toml.Toml
+import net.kyori.adventure.text.Component
 import team.azalea.maple.maplePlugin
 
 class MessageUtil private constructor(private val translations: Toml) {
+    /**
+     * Translates a key in the translations file.
+     *
+     * @param key The key to translate
+     * @param placeholders A map of placeholders to replace in the translation
+     * @return The translated string
+     */
     fun translate(key: String, placeholders: Map<String, String> = emptyMap()): String {
         val translation = translations.getString("en.$key") ?: return key
         val formatted = translation.replacePlaceholders(placeholders)
         return formatted
     }
 
+    /**
+     * Gets the lore for a key in the translations file.
+     *
+     * @param key The key to get the lore for
+     * @return A list of components representing the lore
+     */
+    fun getLore(key: String): List<Component> {
+        val translation = translations.getString("en.$key") ?: return emptyList()
+        return translation.split("\n").map {
+            if(it.isEmpty()) {
+                Component.empty()
+            } else {
+                it.trimIndent().mm()
+            }
+        }
+    }
+
+    /**
+     * Gets the string for a key in the translations file.
+     *
+     * @param key The key to get the string for
+     * @return The string
+     */
     fun getString(key: String): String = translations.getString("en.$key") ?: key
 
+    /**
+     * Gets the colors inside the translations file.
+     *
+     * @return A map of colors
+     */
     fun getColors(): Map<String, Any> = translations.getTable("colors").toMap()
 
+    /**
+     * Gets the custom placeholders inside the translations file.
+     *
+     * @return A map of custom placeholders
+     */
     fun getCustomPlaceholders(): Map<String, Any> = translations.getTable("custom_placeholders").toMap()
 
     class Builder {

@@ -98,3 +98,41 @@ provideMessage = "Provide a reason for reverting the punishment:"
 success = "{success} Successfully reverted the punishment!"
 error = "{error} {reason}"
 log = "<hover:show_text:'<s>View punishment'><click:run_command:/punishment {id}><gray><s>{moderator}</s> reverted <s>{player}</s> - <red>{reason}</red>"
+
+[en.punishments.commands.edit.items.revert]
+text = "<red>Revert"
+lore = "<s>Revert this punishment"
+noReversion = "<red>Kicks cannot be reverted."
+alreadyReverted = """
+    <red>This punishment has already been reverted!
+"""
+
+[en.punishments.commands.edit.items.reason]
+text = "<p>Edit Reason"
+lore = "<s>Edit the reason for this punishment"
+success = "<success>Successfully edited reason."
+
+[en.punishments.commands.edit.items.duration]
+text = "<p>Edit duration"
+lore = "<s>Edit the duration for this punishment"
+noEditDuration = "<red>Kicks cannot have a duration."
+input = """
+    <s>Enter the new duration below (ex: 1h):
+"""
+success = "<success>Successfully edited duration."
+
+[en.punishments.commands.edit.items.notes]
+text = "<p>Edit Notes"
+lore = "<s>Edit the notes for this punishment"
+input = """
+    <s>Enter your note below:
+"""
+success = "<success>Successfully edited notes."
+noClearPermission = """
+    <error>You do not have permission to clear notes.
+"""
+cleared = "<success>Successfully cleared notes."
+clearCancelled = "<error>Cancelled clearing notes."
+confirmClear = """
+    <s>Please enter <g>yes</g> to confirm:
+"""

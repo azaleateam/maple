@@ -121,8 +121,16 @@ object Punishments {
         ).singleNullable<PunishmentData>()
     }
 
+    /**
+     *  Reverts a punishment.
+     *
+     *  @param id The ID of the punishment
+     *  @param user The user who is reverting the punishment
+     *  @param reason The reason for the revert
+     */
     suspend fun revert(id: String, user: User, reason: String) {
         val punishment = get(id) ?: throw IllegalArgumentException("Punishment with ID $id does not exist.")
+        if(punishment.type == PunishmentTypes.KICK.ordinal) throw IllegalStateException("Kicks cannot be reverted.")
         if(punishment.active == 0) throw IllegalStateException("Punishment with ID $id is not active.")
         if(punishment.revertedAt != null) throw IllegalStateException("Punishment with ID $id has already been reverted.")
 
@@ -142,6 +150,69 @@ object Punishments {
         })
     }
 
+    /**
+     *  Updates the reason of a punishment.
+     *
+     *  @param id The ID of the punishment
+     *  @param reason The new reason for the punishment
+     */
+    suspend fun updateReason(id: String, reason: String) {
+        iron.prepare("""
+            UPDATE punishments
+            SET reason = :reason
+            WHERE id = :id
+        """.trimIndent(), bind {
+            "reason" to reason
+            "id" to id
+        })
+    }
+
+    /**
+     *  Updates the notes of a punishment.
+     *
+     *  @param id The ID of the punishment
+     *  @param notes The new notes for the punishment
+     */
+    suspend fun updateNotes(id: String, notes: String?) {
+        // this is seperate because Iron doesn't support null values in binds
+        if(notes === null) {
+            iron.prepare("""
+                UPDATE punishments
+                SET notes = NULL
+                WHERE id = ?
+            """.trimIndent(), id)
+            return
+        }
+
+        iron.prepare("""
+            UPDATE punishments
+            SET notes = :notes
+            WHERE id = :id
+        """.trimIndent(), bind {
+            "notes" to notes
+            "id" to id
+        })
+    }
+
+    /**
+     * Updates the duration of a punishment.
+     *
+     * @param id The ID of the punishment
+     * @param duration The new duration of the punishment
+     */
+    suspend fun updateDuration(id: String, duration: Long) {
+        val punishment = get(id) ?: throw IllegalArgumentException("Punishment with ID $id does not exist.")
+        if(punishment.type == PunishmentTypes.KICK.ordinal) throw IllegalStateException("Kicks cannot have a duration.")
+
+        iron.prepare("""
+            UPDATE punishments
+            SET duration = :duration
+            WHERE id = :id
+        """.trimIndent(), bind {
+            "duration" to duration
+            "id" to id
+        })
+    }
 
     /**
      * Sets up the punishment module by loading the config then registering commands and listeners.
