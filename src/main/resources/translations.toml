@@ -50,7 +50,7 @@ playerBanned = """
         <s>If you believe this is false, you may appeal on our {discord} <s>server in the <p>#tickets <s>channel.
 """
 playerMuted = """
-        {error} {full_reason} <#B0B0B0>[{duration}]<s>.
+        {error} {long_reason} <#B0B0B0>[{duration}]<s>.
 
         <s>If you believe this is false, you may appeal on our {discord} <s>server in the <p>#tickets <s>channel.
 """
@@ -62,6 +62,14 @@ playerKicked = """
 
 [en.punishments.commands.ban]
 alreadyBanned = "{error} {target} is already banned!"
+error = "{error} {reason}"
+
+[en.punishments.commands.kick]
+error = "{error} {reason}"
+
+[en.punishments.commands.mute]
+alreadyMuted = "{error} {target} is already muted!"
+error = "{error} {reason}"
 
 [en.punishments.commands.view]
 all = """

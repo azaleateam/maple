@@ -118,16 +118,6 @@ private fun String.toPluralForm(): String {
 }
 
 /**
- *  Checks if a player can punish another player.
- *
- *  @param uuid The UUID of the player to check
- *  @return True if the player can punish, false otherwise
- */
-fun canPunish(uuid: UUID): Boolean {
-    return true
-}
-
-/**
  *  A representation of a user.
  *
  *  This class is used to represent a user when creating a punishment.

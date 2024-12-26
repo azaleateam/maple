@@ -3,6 +3,7 @@ version: '1.0-SNAPSHOT'
 main: team.azalea.maple.MaplePlugin
 api-version: '1.21'
 authors: [ Azalea Team ]
+depend: [ LuckPerms ]
 description: Core utilities for servers under the Azalea network. Manages punishments, chat filtering, and other things.
 website: https://azalea.team/
 libraries:

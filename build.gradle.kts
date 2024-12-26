@@ -24,6 +24,8 @@ dependencies {
     implementation("com.github.shynixn.mccoroutine:mccoroutine-bukkit-api:2.20.0")
     implementation("com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:2.20.0")
 
+    compileOnly("net.luckperms:api:5.4")
+
     /* database */
     implementation("gg.ingot:iron:f77a1ccb6a")
     ksp("gg.ingot.iron:processor:f77a1ccb6a")

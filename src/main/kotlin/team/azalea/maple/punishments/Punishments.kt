@@ -11,6 +11,7 @@ import team.azalea.maple.listenerManager
 import team.azalea.maple.maplePlugin
 import team.azalea.maple.types.PunishmentShort
 import team.azalea.maple.types.PunishmentType
+import team.azalea.maple.util.canBeActionedBy
 import java.util.UUID
 
 data class PunishmentConfig(
@@ -73,6 +74,15 @@ object Punishments {
         notes: String? = null,
         active: Boolean = true
     ): PunishmentData {
+        val offlinePlayer = Bukkit.getOfflinePlayer(player)
+        val moderatorPlayer = Bukkit.getPlayer(moderator)
+
+        // if the moderator player is null, the player is likely a console user, so we can always action
+        val actionable = moderatorPlayer?.let { offlinePlayer.canBeActionedBy(it) } ?: true
+        if(moderatorPlayer !== null && !actionable) {
+            throw IllegalArgumentException("${offlinePlayer.name} cannot be punished by ${moderatorPlayer.name}")
+        }
+
         val punishment = PunishmentData(
             moderator = moderator.toString(),
             player = player.toString(),

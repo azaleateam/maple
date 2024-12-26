@@ -35,12 +35,16 @@ fun mute(
         return@launch
     }
 
-    Punishment(
-        moderator = executorUser,
-        player = targetUser,
-        reason = reason,
-        type = PunishmentTypes.MUTE,
-        duration = duration,
-        notes = notes.joinToString(" "),
-    ).handle()
+      try {
+          Punishment(
+              moderator = executorUser,
+              player = targetUser,
+              reason = reason,
+              type = PunishmentTypes.MUTE,
+              duration = duration,
+              notes = notes.joinToString(" "),
+          ).handle()
+      } catch (e: Exception) {
+          player.sendKey("punishments.commands.mute.error", "reason" to (e.message ?: "Unknown"))
+      }
 }

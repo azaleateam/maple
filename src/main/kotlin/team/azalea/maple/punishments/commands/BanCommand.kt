@@ -35,12 +35,16 @@ fun ban(
         return@launch
     }
 
-    Punishment(
-        moderator = executorUser,
-        player = targetUser,
-        reason = reason,
-        type = PunishmentTypes.BAN,
-        duration = duration,
-        notes = notes.joinToString(" "),
-    ).handle()
+    try {
+        Punishment(
+            moderator = executorUser,
+            player = targetUser,
+            reason = reason,
+            type = PunishmentTypes.BAN,
+            duration = duration,
+            notes = notes.joinToString(" "),
+        ).handle()
+    } catch (e: Exception) {
+        player.sendKey("punishments.commands.ban.error", "reason" to (e.message ?: "Unknown"))
+    }
 }
