@@ -20,7 +20,7 @@ import team.azalea.maple.punishments.*
 
 fun kick(
     player: CommandSender, target: OfflinePlayer,
-    reason: String, @Optional vararg notes: String?
+    vararg reason: String,
 ) = maplePlugin.launch(maplePlugin.asyncDispatcher) {
     val executorUser = if(player is Player) User(player.uniqueId, player.name) else CONSOLE_USER
     val targetUser = User(target.uniqueId, target.name ?: "Unknown")
@@ -28,8 +28,8 @@ fun kick(
     Punishment(
         moderator = executorUser,
         player = targetUser,
-        reason = reason,
+        reason = reason.joinToString(" "),
         type = PunishmentTypes.KICK,
-        notes = notes.joinToString(" "),
+        notes = ""
     ).handle()
 }
