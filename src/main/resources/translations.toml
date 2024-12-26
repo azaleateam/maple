@@ -37,6 +37,8 @@ reload = "{success} Reloaded translations!"
 
 [en.punishments]
 invalidId = "{error} {id} is not a valid punishment ID!"
+log = "<hover:show_text:'<p>View punishment</p>'><click:run_command:/punishment {id}><gray><p>{moderator}</p> {type} <p>{player}</p> - <red>{short_reason}</red> [{duration_uppercase}]"
+kickLog = "<hover:show_text:'<p>View punishment</p>'><click:run_command:/punishment {id}><gray><p>{moderator}</p> {type} <p>{player}</p> - <red>{short_reason}</red>"
 playerBanned = """
         <s>You are banned for <error>{short_reason} <#B0B0B0>[{duration}]<s>.
 
@@ -110,6 +112,7 @@ alreadyReverted = """
 [en.punishments.commands.edit.items.reason]
 text = "<p>Edit Reason"
 lore = "<s>Edit the reason for this punishment"
+input = "<s>Enter the new reason below:"
 success = "<success>Successfully edited reason."
 
 [en.punishments.commands.edit.items.duration]
@@ -129,10 +132,35 @@ input = """
 """
 success = "<success>Successfully edited notes."
 noClearPermission = """
-    <error>You do not have permission to clear notes.
+    {error} You do not have permission to clear notes.
 """
 cleared = "<success>Successfully cleared notes."
-clearCancelled = "<error>Cancelled clearing notes."
+clearCancelled = "{error}Cancelled clearing notes."
 confirmClear = """
     <s>Please enter <g>yes</g> to confirm:
 """
+
+[en.punishments.commands.punish]
+hasActivePunishment = "{error} This player already has an active punishment! Click <click:run_command:/punishment {id}><u>here</u></click> to view it."
+initial = """
+             <pr>Username:</pr>
+             {player}
+
+             <pr>What are you punishing for? (p.{current_page})</pr>
+             {punishments}
+"""
+confirm = """
+             <pr>Username:</pr>
+             {player}
+
+             <pr>You are punishing this player for:</pr>
+             {reason} <em>{type}</em>
+
+             <pr>Confirm & Issue:</pr>
+
+             <dark_green><click:run_command:/punish {player} {short} confirm>ISSUE</click></dark_green>
+
+             <dark_red><click:run_command:/punish {player} {short} cancel>CANCEL</click></dark_red>
+"""
+success = "{success} Successfully punished player."
+error = "{error} {reason}"

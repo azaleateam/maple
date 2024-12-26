@@ -22,31 +22,6 @@ import team.azalea.maple.util.mm
 import team.azalea.maple.util.replaceTabs
 import team.azalea.maple.util.sendKey
 
-fun PunishmentData.getReasonString(): String {
-    var text = ""
-    var reason = this.reason
-    lateinit var punishmentInfo: PunishmentConfig
-
-    // If the reason is a predefined punishment, get the short reason
-    // (otherwise, it would just be the short ID)
-    // if it's not a predefined punishment, just use the reason as is
-    if(reason.lowercase() in punishmentConfig.punishments.keys) {
-        punishmentInfo = punishmentConfig.punishments[reason.lowercase()]!!
-        reason = punishmentInfo.shortReason
-    }
-
-    if(this.active == 1) {
-        text = if (PunishmentTypes.isBan(this.type)) "<red>$reason</red>"
-        else "<blue>$reason</blue>"
-    }
-
-    if (this.revertedAt != null) text = "(R) $reason"
-
-    if(text.isEmpty()) text = reason
-
-    return text
-}
-
 fun punishment(
     player: CommandSender, id: String
 ) = maplePlugin.launch(maplePlugin.asyncDispatcher) {

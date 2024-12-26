@@ -13,6 +13,7 @@ import gg.ingot.iron.strategies.NamingStrategy
 import kotlinx.coroutines.withContext
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
+import org.bukkit.entity.Player
 import team.azalea.maple.maplePlugin
 import team.azalea.maple.messageUtil
 import team.azalea.maple.util.mm
@@ -129,9 +130,14 @@ fun canPunish(uuid: UUID): Boolean {
 /**
  *  A representation of a user.
  *
- *  This class is used to represent a user when creating a punishment.//
+ *  This class is used to represent a user when creating a punishment.
  */
-data class User(val uuid: UUID, val name: String)
+data class User(val uuid: UUID, val name: String) {
+    fun getPlayer(): Player {
+        return Bukkit.getPlayer(uuid) ?: throw IllegalStateException("Player $uuid is not online")
+    }
+}
+
 val CONSOLE_USER = User(UUID(0, 0), "Console")
 
 /**
@@ -213,6 +219,31 @@ data class PunishmentData(
 
     fun getPlayerUUID(): UUID {
         return UUID.fromString(this.player)
+    }
+
+    fun getReasonString(): String {
+        var text = ""
+        var reason = this.reason
+        lateinit var punishmentInfo: PunishmentConfig
+
+        // If the reason is a predefined punishment, get the short reason
+        // (otherwise, it would just be the short ID)
+        // if it's not a predefined punishment, just use the reason as is
+        if(reason.lowercase() in punishmentConfig.punishments.keys) {
+            punishmentInfo = punishmentConfig.punishments[reason.lowercase()]!!
+            reason = punishmentInfo.shortReason
+        }
+
+        if(this.active == 1) {
+            text = if (PunishmentTypes.isBan(this.type)) "<red>$reason</red>"
+            else "<blue>$reason</blue>"
+        }
+
+        if (this.revertedAt != null) text = "(R) $reason"
+
+        if(text.isEmpty()) text = reason
+
+        return text
     }
 }
 
@@ -323,7 +354,7 @@ data class Punishment(
         var duration = convertDate(this.duration)
         if(this.type == PunishmentTypes.KICK) duration = 0
 
-        Punishments.create(
+        val punishment = Punishments.create(
             moderator = this.moderator.uuid,
             player = this.player.uuid,
             reason = this.reason,
@@ -334,9 +365,9 @@ data class Punishment(
         )
 
         val logPlaceholders = this.getPlaceholders()
-            .plus(mapOf("id" to "punishment.id"))
+            .plus(mapOf("id" to punishment.id))
 
-        val key = if(this.type == PunishmentTypes.KICK) "punishments.kickedPlayer" else "punishments.punishment"
+        val key = if(this.type == PunishmentTypes.KICK) "punishments.kickLog" else "punishments.log"
         val logString = messageUtil.getString(key).replacePlaceholders(logPlaceholders).trimIndent()
 
         Bukkit.getOnlinePlayers().filter { it.hasPermission("maple.staff.punish") }

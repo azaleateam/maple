@@ -15,7 +15,7 @@ import team.azalea.maple.messageUtil
  * @param ignoreCase Whether to ignore the case of the placeholder
  * @return The string with placeholders replaced
  */
-fun String.replacePlaceholders(map: Map<String, String>, ignoreCase: Boolean = false): String {
+fun String.replacePlaceholders(map: Map<String, Any>, ignoreCase: Boolean = false): String {
     val modifiers: Map<String, (String) -> String> = mapOf(
         "lowercase" to String::lowercase,
         "uppercase" to String::uppercase,
@@ -28,7 +28,7 @@ fun String.replacePlaceholders(map: Map<String, String>, ignoreCase: Boolean = f
     customPlaceholders.forEach {
         totalPlaceholders[it.key] = it.value.toString()
     }
-    totalPlaceholders.putAll(map)
+    totalPlaceholders.putAll(map.map { it.key to it.value.toString() })
 
     var placeholded = this
 

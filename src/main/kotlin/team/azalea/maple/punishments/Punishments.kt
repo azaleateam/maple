@@ -9,6 +9,8 @@ import org.flywaydb.core.Flyway
 import team.azalea.maple.commandManager
 import team.azalea.maple.listenerManager
 import team.azalea.maple.maplePlugin
+import team.azalea.maple.types.PunishmentShort
+import team.azalea.maple.types.PunishmentType
 import java.util.UUID
 
 data class PunishmentConfig(
@@ -233,6 +235,8 @@ object Punishments {
         punishmentConfig = mapper.decode(configFile.readText())
 
         migrate()
+
+        commandManager.types[PunishmentShort::class.java] = PunishmentType
 
         commandManager.registerCommands("team.azalea.maple.punishments.commands")
         listenerManager.registerListeners("team.azalea.maple.punishments.listener")

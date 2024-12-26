@@ -12,7 +12,7 @@ class MessageUtil private constructor(private val translations: Toml) {
      * @param placeholders A map of placeholders to replace in the translation
      * @return The translated string
      */
-    fun translate(key: String, placeholders: Map<String, String> = emptyMap()): String {
+    fun translate(key: String, placeholders: Map<String, Any> = emptyMap()): String {
         val translation = translations.getString("en.$key") ?: return key
         val formatted = translation.replacePlaceholders(placeholders)
         return formatted

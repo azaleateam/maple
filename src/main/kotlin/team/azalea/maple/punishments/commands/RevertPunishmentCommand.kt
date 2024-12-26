@@ -11,6 +11,7 @@ package team.azalea.maple.punishments.commands
 import com.github.shynixn.mccoroutine.bukkit.asyncDispatcher
 import com.github.shynixn.mccoroutine.bukkit.launch
 import me.honkling.commando.common.annotations.Command
+import me.honkling.commando.common.annotations.Ignore
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import team.azalea.maple.maplePlugin
@@ -18,6 +19,7 @@ import team.azalea.maple.messageUtil
 import team.azalea.maple.punishments.*
 import team.azalea.maple.util.*
 
+@Ignore
 private fun sendLog(punishment: PunishmentData, moderator: User) {
     val target = Bukkit.getOfflinePlayer(punishment.getPlayerUUID())
     val (shortReason) = getReasonInfo(punishment.reason)

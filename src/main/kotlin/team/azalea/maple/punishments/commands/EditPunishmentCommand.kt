@@ -74,7 +74,7 @@ private object Items {
         }
 
         this.put('b', editReasonItem) {
-            player.sendMessage("<s>Enter the new reason below:".mm())
+            player.sendKey("punishments.commands.edit.items.reason.input")
             player.closeInventory()
             reasonInput.prompt()
         }
