@@ -18,6 +18,9 @@ discord = "<click:open_url:\"https://discord.azalea.team/\"><#7289da><u>Discord<
 self = "{success} You're now able to fly!"
 other = "{success} {target} is now able to fly!"
 
+[en.chatFilter]
+message = "<s>[Filter] <p>{username}</p> sent: {message} (<p>{action}</p>)"
+
 [en.commands.flyspeed]
 self = "{success} You've set your fly speed to <b>{speed}</b>!"
 other = "{success} You've set the fly speed of {target} to {speed}!"
