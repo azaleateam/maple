@@ -38,6 +38,10 @@ dependencies {
     implementation("cc.ekblad:4koma:1.2.0")
 
     implementation(kotlin("reflect"))
+
+    compileOnly("net.dv8tion:JDA:5.1.0") {
+        exclude("opus-java")
+    }
 }
 
 tasks.withType<ShadowJar> {

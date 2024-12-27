@@ -7,6 +7,7 @@ import me.honkling.commonlib.CommonLib
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.GameMode
 import org.bukkit.plugin.java.JavaPlugin
+import team.azalea.maple.discord.Discord
 import team.azalea.maple.listener.PlayerChatListener
 import team.azalea.maple.punishments.Punishments
 import team.azalea.maple.types.GamemodeType
@@ -39,6 +40,7 @@ class MaplePlugin : SuspendingJavaPlugin() {
         miniMessage = MapleMiniMessage().build()
 
         Punishments.setup()
+        Discord.load()
         registerListeners()
 
         logger.info("Maple has been enabled! 🍁")

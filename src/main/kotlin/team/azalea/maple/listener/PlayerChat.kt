@@ -6,13 +6,15 @@ import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
+import team.azalea.maple.discord.discordConfig
+import team.azalea.maple.discord.useBot
 import team.azalea.maple.filter.FilterAction
 import team.azalea.maple.filter.chatFilterInstance
 import team.azalea.maple.maplePlugin
 import team.azalea.maple.punishments.*
-import team.azalea.maple.util.InputHandler
-import team.azalea.maple.util.plainText
-import team.azalea.maple.util.sendKey
+import team.azalea.maple.util.*
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class PlayerChatListener : Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -79,6 +81,29 @@ class PlayerChatListener : Listener {
                     PunishmentTypes.AUTO_BAN
                 ).handle()
             }
+        }
+
+        useBot {
+            if(event.isCancelled) return@useBot
+
+            val configMsg = discordConfig.chat.content
+            val channel = it.getTextChannelById(discordConfig.channels.main.toLong())
+                ?: throw Exception("Failed to find guild!")
+
+            val timestamp = DateTimeFormatter.ofPattern("HH:mm:ss z").format(ZonedDateTime.now())
+
+            val user = playerAdapter.getUser(player)
+            val playerRank = user.cachedData.metaData.prefix
+                .orEmpty().mm().plainText().trim()
+
+            val parsedMsg = configMsg.replacePlaceholders(mapOf(
+                "name" to name,
+                "rank" to playerRank,
+                "message" to message,
+                "timestamp" to timestamp,
+            ))
+
+            channel.sendMessage(parsedMsg).queue()
         }
     }
 }

@@ -1,0 +1,15 @@
+botToken = ""
+
+[channels]
+main = ""
+log = ""
+
+[join]
+content = "`[{timestamp}] {name} joined`"
+[leave]
+content = "`[{timestamp}] {name} left`"
+[chat]
+content = "`[{timestamp}] {rank} {name}: {message}`"
+[ingame]
+content = "<#d6daff>[#] <#b3b9fc>{name}</#b3b9fc>: {message}"
+
