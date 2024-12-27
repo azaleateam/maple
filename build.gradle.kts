@@ -77,19 +77,3 @@ kotlin {
 tasks.shadowJar {
     archiveFileName.set("Maple.jar")
 }
-
-tasks.named<ProcessResources>("processResources") {
-    // move migration files to the right place
-    val migrationDir = File(project.projectDir.toString(), "src/main/resources/db/migration")
-
-    if (migrationDir.exists()) {
-        val migrationFiles = migrationDir.listFiles()
-        filteringCharset = "UTF-8"
-        if (migrationFiles != null) {
-            for (file in migrationFiles) {
-                val target = File(project.buildDir, "resources/main/${file.name}")
-                file.copyTo(target, true)
-            }
-        }
-    }
-}
