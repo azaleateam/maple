@@ -12,21 +12,28 @@ import com.github.shynixn.mccoroutine.bukkit.asyncDispatcher
 import com.github.shynixn.mccoroutine.bukkit.launch
 import me.honkling.commando.common.annotations.Command
 import me.honkling.commando.common.annotations.Ignore
+import net.dv8tion.jda.api.EmbedBuilder
+import net.dv8tion.jda.api.entities.MessageEmbed
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import team.azalea.maple.Database
+import team.azalea.maple.discord.discordConfig
+import team.azalea.maple.discord.useBot
 import team.azalea.maple.maplePlugin
 import team.azalea.maple.messageUtil
 import team.azalea.maple.punishments.*
 import team.azalea.maple.util.*
+import java.awt.Color
 
 @Ignore
 private fun sendLog(punishment: PunishmentData, moderator: User) {
     val target = Bukkit.getOfflinePlayer(punishment.getPlayerUUID())
     val (shortReason) = getReasonInfo(punishment.reason)
+    val playerName = target.name ?: "Unknown"
 
     val logPlaceholders = mapOf(
         "moderator" to moderator.name,
-        "player" to (target.name ?: "Unknown"),
+        "player" to playerName,
         "reason" to shortReason,
         "id" to punishment.id,
     )
@@ -37,6 +44,25 @@ private fun sendLog(punishment: PunishmentData, moderator: User) {
         .forEach {
             it.sendMessage(message.mm())
         }
+
+    useBot {
+        val discordLogChannel = it.getTextChannelById(discordConfig.channels.log.toLong())
+            ?: throw Exception("Failed to find logs channel")
+
+        maplePlugin.launch(maplePlugin.asyncDispatcher) {
+            val serverName = Database.getServerName()
+
+            val logEmbed = EmbedBuilder().setTitle("Punishment for $playerName reverted")
+                .setColor(Color.decode("#ff6e6e"))
+                .setThumbnail("https://crafatar.com/renders/head/${punishment.getPlayerUUID()}")
+                .addField(MessageEmbed.Field("Reverted by", moderator.name, false))
+                .addField(MessageEmbed.Field("Punishment ID", punishment.id, false))
+                .setFooter("Server: $serverName")
+                .build()
+
+            discordLogChannel.sendMessageEmbeds(logEmbed).queue()
+        }
+    }
 }
 
 fun revertPunishment(

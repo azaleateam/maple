@@ -27,5 +27,12 @@ object Database {
             .migrate()
     }
 
+    suspend fun getServerName(): String {
+        val iron = getIron()
+        val serverName = iron.prepare("SELECT value FROM server_settings WHERE key = 'server_name'")
+            .singleNullable<String>()
+        return serverName ?: "Unknown Server"
+    }
+
     fun getIron(): Iron = iron
 }

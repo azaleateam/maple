@@ -2,10 +2,13 @@ package team.azalea.maple.listener
 
 import io.papermc.paper.event.player.AsyncChatEvent
 import kotlinx.coroutines.runBlocking
+import net.dv8tion.jda.api.EmbedBuilder
+import net.dv8tion.jda.api.entities.MessageEmbed
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
+import team.azalea.maple.Database
 import team.azalea.maple.discord.discordConfig
 import team.azalea.maple.discord.useBot
 import team.azalea.maple.filter.FilterAction
@@ -57,10 +60,14 @@ class PlayerChatListener : Listener {
 
         if (filterAction == FilterAction.BLOCK || filterAction == FilterAction.BAN) {
             event.isCancelled = true
+            val serverName = Database.getServerName()
 
             maplePlugin.logger.info("$name triggered the filter with message: $message")
 
-            val underlinedMessage = message.replace(filterResult.failedTokens.first().value, "<u><#ff6e6e>${filterResult.failedTokens.first().value}</#ff6e6e></u>")
+            val underlinedMessage = message.replace(
+                filterResult.failedTokens.first().value,
+                "<u><#ff6e6e>${filterResult.failedTokens.first().value}</#ff6e6e></u>"
+            )
             Bukkit.getOnlinePlayers().filter { it.hasPermission("maple.staff.chatFilter") }
                 .forEach {
                     it.sendKey(
@@ -81,6 +88,27 @@ class PlayerChatListener : Listener {
                     PunishmentTypes.AUTO_BAN
                 ).handle()
             }
+
+            useBot {
+                it.getTextChannelById(chatFilterInstance.logChannel ?: "0")?.let { logChannel ->
+                    val firstToken = filterResult.failedTokens.first()
+
+                    val formattedMessage = message
+                        .replace("`", "\\`")
+                        .replaceFirst(firstToken.value, "`>>>${firstToken.value}<<<`")
+
+                    val logEmbed = EmbedBuilder()
+                        .setTitle("`${player.name}` triggered the filter")
+                        .setColor(java.awt.Color.decode("#ff6e6e"))
+                        .addField(MessageEmbed.Field("Message", formattedMessage, false))
+                        .addField(MessageEmbed.Field("Action", filterAction.toString(), false))
+                        .setFooter("Path: ${filterResult.ruleset.path.substringAfterLast('/')} (Priority: ${filterResult.ruleset.priority}) [Env: $serverName]")
+                        .build()
+
+                    logChannel.sendMessageEmbeds(logEmbed).queue()
+                }
+            }
+
         }
 
         useBot {

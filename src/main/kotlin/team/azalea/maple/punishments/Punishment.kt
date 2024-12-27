@@ -11,13 +11,19 @@ import gg.ingot.iron.annotations.Model
 import gg.ingot.iron.bindings.Bindings
 import gg.ingot.iron.strategies.NamingStrategy
 import kotlinx.coroutines.withContext
+import net.dv8tion.jda.api.EmbedBuilder
+import net.dv8tion.jda.api.entities.MessageEmbed
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import team.azalea.maple.Database
+import team.azalea.maple.discord.discordConfig
+import team.azalea.maple.discord.useBot
 import team.azalea.maple.maplePlugin
 import team.azalea.maple.messageUtil
 import team.azalea.maple.util.mm
 import team.azalea.maple.util.replacePlaceholders
+import java.awt.Color
 import java.time.Instant
 import java.util.UUID
 
@@ -335,6 +341,33 @@ data class Punishment(
         return placeholders
     }
 
+    private suspend fun sendDiscordLog(id: String) {
+        val serverName = Database.getServerName()
+        maplePlugin.logger.info("Player ${player.name} was ${getPluralType()} by ${moderator.name} for $reason (Punishment ID: $id)")
+
+        useBot {
+            val discordLogChannel = it.getTextChannelById(discordConfig.channels.log.toLong())
+                ?: throw Exception("Failed to find #punish-logs channel")
+
+            val (shortReason) = getReasonInfo(this.reason)
+            val info = this
+
+            val logEmbed = EmbedBuilder().setTitle("${info.player.name} was ${getPluralType()}")
+                .setColor(Color.decode("#ff6e6e"))
+                .setThumbnail("https://skins.mcstats.com/body/side/${info.player.uuid}")
+                .addField(MessageEmbed.Field("Reason", shortReason, true))
+                .addField(MessageEmbed.Field("Moderator", info.moderator.name, true))
+                .addField(MessageEmbed.Field("Punishment ID", id, false))
+                .setFooter("Server: $serverName")
+
+            if(info.notes.isNotEmpty()) {
+                logEmbed.addField(MessageEmbed.Field("Notes", info.notes, true))
+            }
+
+            discordLogChannel.sendMessageEmbeds(logEmbed.build()).queue()
+        }
+    }
+
     /**
      *  Handles the punishment using the data provided.
      *
@@ -364,6 +397,8 @@ data class Punishment(
             .forEach {
                 it.sendMessage(logString.mm())
             }
+
+        sendDiscordLog(punishment.id)
 
         val onlinePlayer = maplePlugin.server.onlinePlayers.firstOrNull {
             it.uniqueId == player.uuid
