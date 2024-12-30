@@ -14,12 +14,15 @@ error = "<error>❌<#ff7f6e>"
 success = "<#bfffc6>✔"
 discord = "<click:open_url:\"https://discord.azalea.team/\"><#7289da><u>Discord</u>"
 
+[en.chatFilter]
+message = "<s>[Filter] <p>{username}</p> sent: {message} (<p>{action}</p>)"
+
+[en.commands.discord]
+base = "{success} Join us on Discord <click:open_url:\"https://discord.azalea.team/\"><#7289da><u>here</u>!"
+
 [en.commands.fly]
 self = "{success} You're now able to fly!"
 other = "{success} {target} is now able to fly!"
-
-[en.chatFilter]
-message = "<s>[Filter] <p>{username}</p> sent: {message} (<p>{action}</p>)"
 
 [en.commands.flyspeed]
 self = "{success} You've set your fly speed to <b>{speed}</b>!"
