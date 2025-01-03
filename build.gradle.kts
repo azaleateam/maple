@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm") version "2.0.10"
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("com.google.devtools.ksp") version "2.0.10-1.0.24"
+    `maven-publish`
 }
 
 group = "team.azalea"
