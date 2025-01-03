@@ -78,3 +78,15 @@ kotlin {
 tasks.shadowJar {
     archiveFileName.set("Maple.jar")
 }
+
+publishing {
+    publications {
+        create<MavenPublication>("maple") {
+            groupId = "team.azalea"
+            artifactId = "maple"
+            version = project.version.toString()
+
+            from(components["kotlin"])
+        }
+    }
+}
