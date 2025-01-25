@@ -1,5 +1,6 @@
 package team.azalea.maple.punishments
 
+import team.azalea.maple.Database
 import team.azalea.maple.util.formatDateWithSeconds
 import java.net.URLEncoder
 import java.time.Instant
@@ -15,9 +16,10 @@ private const val REPORTED_USERNAME_FIELD = "tf_31915142821523"
 private const val SERVER_NAME_FIELD = "tf_27062989544851"
 private const val SERVER_ID_FIELD = "tf_27063041501203"
 
-fun getMinehutReportLink(punishment: Punishment, timestamp: Instant): String {
+suspend fun getMinehutReportLink(punishment: Punishment, timestamp: Instant): String {
     val shortReason = getReasonInfo(punishment.reason).first
     val formattedTimestamp = formatDateWithSeconds(timestamp)
+    val minehutInfo = Database.getMinehutInfo()
 
     val parameters = mutableMapOf(
         SUBJECT_FIELD to "Reporting Player",
@@ -27,8 +29,10 @@ fun getMinehutReportLink(punishment: Punishment, timestamp: Instant): String {
         REPORTED_USERNAME_FIELD to punishment.player.name,
         DESCRIPTION_FIELD to """
             This player is being reported for ${shortReason.lowercase()}.
-            They have already been punished on our server at $formattedTimestamp.
+            They have already been punished on our server at $formattedTimestamp UTC.
         """.trimIndent(),
+        SERVER_NAME_FIELD to minehutInfo.first,
+        SERVER_ID_FIELD to minehutInfo.second,
     )
 
     val queryBuilder = StringBuilder("?")

@@ -10,6 +10,7 @@ import gg.ingot.iron.annotations.Column
 import gg.ingot.iron.annotations.Model
 import gg.ingot.iron.bindings.Bindings
 import gg.ingot.iron.strategies.NamingStrategy
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.MessageEmbed
@@ -367,14 +368,17 @@ data class Punishment(
                 logEmbed.addField(MessageEmbed.Field("Notes", info.notes, true))
             }
 
-            val minehutReportUrl = getMinehutReportLink(this, Instant.now())
+            // yes this is run blocking, but it shouldn't rly matter
+            runBlocking {
+                val minehutReportUrl = getMinehutReportLink(info, Instant.now())
 
-            val messageCreate = MessageCreateBuilder()
-                .setEmbeds(logEmbed.build())
-                .addComponents(ActionRow.of(Button.link(minehutReportUrl, "Create Report")))
-                .build()
+                val messageCreate = MessageCreateBuilder()
+                    .setEmbeds(logEmbed.build())
+                    .addComponents(ActionRow.of(Button.link(minehutReportUrl, "Create Report")))
+                    .build()
 
-            discordLogChannel.sendMessage(messageCreate).queue()
+                discordLogChannel.sendMessage(messageCreate).queue()
+            }
         }
     }
 

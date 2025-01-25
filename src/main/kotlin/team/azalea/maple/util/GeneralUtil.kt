@@ -15,12 +15,14 @@ fun formatDate(instant: Instant): String {
 }
 
 fun formatDateWithSeconds(instant: Instant): String {
-    if(instant == Instant.MAX) return "Never"
+    if (instant == Instant.MAX) return "Never"
     val formatter = DateTimeFormatter.ofPattern("MM/dd/uuuu HH:mm:ss")
         .withZone(ZoneId.systemDefault())
     return formatter.format(instant)
+}
 
 fun infinity(code: Consumer<BukkitTask>, delay: Int) {
     maplePlugin.server.scheduler.runTaskTimer(maplePlugin, { it: BukkitTask ->
         code.accept(it)
-}, 0, delay.toLong())
+    }, 0, delay.toLong())
+}

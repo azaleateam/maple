@@ -34,5 +34,14 @@ object Database {
         return serverName ?: "Unknown Server"
     }
 
+    suspend fun getMinehutInfo(): Pair<String, String> {
+        val iron = getIron()
+        val minehutName = iron.prepare("SELECT value FROM server_settings WHERE key = 'minehut_name'")
+            .singleNullable<String>()
+        val minehutId = iron.prepare("SELECT value FROM server_settings WHERE key = 'minehut_id'")
+            .singleNullable<String>()
+        return Pair(minehutName ?: "Unknown Name", minehutId ?: "Unknown ID")
+    }
+
     fun getIron(): Iron = iron
 }
