@@ -18,6 +18,9 @@ discord = "<click:open_url:\"https://discord.azalea.team/\"><#7289da><u>Discord<
 [en.chatFilter]
 message = "<s>[Filter] <p>{username}</p> sent: {message} (<p>{action}</p>)"
 
+[en.staffchat]
+message = "<s>[Staff] <p>{player}<gray>:</gray></p> {message}"
+
 [en.broadcasts]
 all = [
     """
