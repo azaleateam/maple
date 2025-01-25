@@ -57,6 +57,56 @@ all = [
    """,
 ]
 
+[en.rules]
+all = [
+    """
+    <b><gradient:#9bd9f2:#578a9e>POKE<reset> <#56889C>Rules</#56889C>
+        <b>1.</b> Be respectful
+        <b>2.</b> No NSFW content
+        <b>3.</b> No threats
+        <b>4.</b> No advertisements
+        <b>5.</b> No hacking
+        <b>6.</b> No abusing bugs or exploits
+
+        <#19911d>For further info, continue reading >
+    """,
+    """
+        <b>1. Be respectful</b>
+
+        Discrimination in any form is not tolerated anywhere on Airbrush.
+        Being disrespectful to others, instigating arguments, attacking
+        people especially for no reason are also not welcome.
+    """,
+    """
+        <b>2. No NSFW content</b>
+
+        NSFW topics or themes are not allowed in neither chat nor paint.
+        Politics are discouraged as it is a near guarantee of turning hostile.
+    """,
+    """
+        <b>3. No threats</b>
+
+        This includes any sort of threat, joke or not, and will be reported directly to Minehut.
+    """,
+    """
+        <b>4. No advertising</b>
+
+        Please do not advertise other servers, Discord servers, websites, etc.
+    """,
+    """
+        <b>5. No hacking</b>
+
+        Please don't hack.
+
+        By hacking, you prove to everyone that you're a noob and incapable of playing a game like a normal person. <3
+    """,
+    """
+        <b>6. No abusing bugs or exploits</b>
+
+        If you find a bug or exploit anywhere in Poke, please let us know and don't abuse them.
+    """
+]
+
 [en.commands]
 setSpawn = "{success} Set spawn location!"
 
