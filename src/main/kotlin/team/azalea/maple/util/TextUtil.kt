@@ -57,8 +57,7 @@ fun String.replacePlaceholders(map: Map<String, Any>, ignoreCase: Boolean = fals
     return placeholded
 }
 
-
 /**
  * Replaces tabs with empty strings, these tab operators can typically break books
  */
-fun String.replaceTabs(): String = this.replace("\t", "")
+fun String.fixString(): String = this.replace("\t", "").replace("\r", "")

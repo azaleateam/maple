@@ -12,10 +12,53 @@ pr = "#9248df"
 prefix = "<t>Maple <br>|<p>"
 error = "<error>❌<#ff7f6e>"
 success = "<#bfffc6>✔"
+discord_url = "https://discord.azalea.team/"
 discord = "<click:open_url:\"https://discord.azalea.team/\"><#7289da><u>Discord</u>"
 
 [en.chatFilter]
 message = "<s>[Filter] <p>{username}</p> sent: {message} (<p>{action}</p>)"
+
+[en.broadcasts]
+all = [
+    """
+
+
+        <discord>★ <st>                                                              </st> <discord>★</discord>
+           <#7eb8d6><b>DISCORD</b></#7eb8d6>
+
+          <white>| <gray>Our community is on <discord>[{discord}]</discord>!</gray>
+          <white>| <gray>Join us for updates, giveaways and give us feedback!</gray>
+
+        <discord>★ <st>                                                              </st> <discord>★</discord>
+
+    """,
+    """
+
+
+        <#bfffc6>💰 <st>                                                              </st> <#bfffc6>💰<#bfffc6>
+           <#bfffc6><b>STORE</b></#bfffc6>
+
+            <white>| <gray>Purchase ranks on our <#bfffc6><click:open_url:\"https://store.azalea.team/\">[<u>Store</u>]</click></#bfffc6>!</gray>
+
+        <#bfffc6>💰 <st>                                                              </st> <#bfffc6>💰<#bfffc6>
+
+    """,
+    """
+
+
+       <#FFE563>★ <st>                                                              </st> <#FFE563>★<#FFE563>
+          <#FFE563><b>FAVORITE</b><#FFE563>
+
+         <white>| <gray>If you like the server, make sure to /favorite it!</gray>
+         <white>| <gray>This allows you to find the server later!</gray>
+
+       <#FFE563>★ <st>                                                              </st> <#FFE563>★<#FFE563>
+
+   """,
+]
+
+[en.commands]
+setSpawn = "{success} Set spawn location!"
 
 [en.commands.discord]
 base = "{success} Join us on Discord <click:open_url:\"https://discord.azalea.team/\"><#7289da><u>here</u>!"
@@ -55,13 +98,21 @@ playerBanned = """
 playerMuted = """
         {error} {long_reason} <#B0B0B0>[{duration}]<s>.
 
-        <s>If you believe this is false, you may appeal on our {discord} <s>server in the <p>#tickets <s>channel.
+        <s>If you believe this is false, you may appeal on our Discord server ({discord_url}) in the <p>#tickets <s>channel.
 """
 playerKicked = """
         <s>You were kicked for <error>{short_reason}<s>.
 
         <p>Description:<s> {long_reason}
 """
+playerAutoBanned = """
+        <s>You were automatically banned for <error>{short_reason} <#B0B0B0>[{duration}]<s>.
+
+        <p>Description:<s> {long_reason}
+
+        <s>If you believe this is false, you may appeal on our Discord server ({discord_url}) in the <p>#tickets <s>channel.
+"""
+
 
 [en.punishments.commands.ban]
 alreadyBanned = "{error} {target} is already banned!"

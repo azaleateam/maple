@@ -17,16 +17,20 @@ import team.azalea.maple.maplePlugin
 import team.azalea.maple.util.sendKey
 
 fun setSpawn(player: Player) = maplePlugin.launch(maplePlugin.asyncDispatcher) {
-    player.sendKey("commands.setSpawn")
-
     val location = player.location
     val locString =  "${location.x}, ${location.y}, ${location.z}, ${location.world!!.name}, ${location.yaw}, ${location.pitch}"
 
     val iron = Database.getIron()
-    iron.prepare("""
-        INSERT INTO server_settings (key, value) VALUES (:key, :value)
+
+    iron.prepare(""" 
+        INSERT INTO server_settings (key, value) 
+        VALUES (:key, :value) 
+        ON CONFLICT(key) DO UPDATE SET 
+            value = excluded.value
     """.trimIndent(), bind {
         "key" to "spawn_location"
         "value" to locString
     })
+
+    player.sendKey("commands.setSpawn")
 }
