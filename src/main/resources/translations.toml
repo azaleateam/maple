@@ -26,13 +26,13 @@ all = [
     """
 
 
-        <#7289da>★ <st>                                                              </st> <#7289da>★</discord>
+        <#7289da>★ <st>                                                              </st> <#7289da>★</#7289da>
            <#7eb8d6><b>DISCORD</b></#7eb8d6>
 
-          <white>| <gray>Our community is on <#7289da>[{discord}]</discord>!</gray>
+          <white>| <gray>Our community is on <#7289da>[{discord}]</#7289da>!</gray>
           <white>| <gray>Join us for updates, giveaways and give us feedback!</gray>
 
-        <#7289da>★ <st>                                                              </st> <#7289da>★</discord>
+        <#7289da>★ <st>                                                              </st> <#7289da>★</#7289da>
 
     """,
     """
@@ -63,40 +63,52 @@ all = [
 [en.rules]
 all = [
     """
-    <b><gradient:#9bd9f2:#578a9e>POKE<reset> <#56889C>Rules</#56889C>
-        <b>1.</b> Be respectful
-        <b>2.</b> No NSFW content
-        <b>3.</b> No threats
-        <b>4.</b> No advertisements
-        <b>5.</b> No hacking
-        <b>6.</b> No abusing bugs or exploits
+    <b><gradient:#9bd9f2:#578a9e>POKE <#56889C>Rules</#56889C><reset>
 
-        <#19911d>For further info, continue reading >
+    <b>1.</b> Be respectful
+    <b>2.</b> No NSFW content
+    <b>3.</b> No threats
+    <b>4.</b> No advertisements
+    <b>5.</b> No hacking
+    <b>6.</b> No abusing bugs or exploits
+
+    <#19911d>For further info, continue reading >
     """,
     """
+        <b><gradient:#9bd9f2:#578a9e>POKE <#56889C>Rules</#56889C><reset>
+
         <b>1. Be respectful</b>
 
         Discrimination in any form is not tolerated anywhere on Airbrush.
         Being disrespectful to others, instigating arguments, attacking
         people especially for no reason are also not welcome.
+        Also no swearing!
     """,
     """
+        <b><gradient:#9bd9f2:#578a9e>POKE <#56889C>Rules</#56889C><reset>
+
         <b>2. No NSFW content</b>
 
-        NSFW topics or themes are not allowed in neither chat nor paint.
+        NSFW topics or themes are not allowed.
         Politics are discouraged as it is a near guarantee of turning hostile.
     """,
     """
+        <b><gradient:#9bd9f2:#578a9e>POKE <#56889C>Rules</#56889C><reset>
+
         <b>3. No threats</b>
 
         This includes any sort of threat, joke or not, and will be reported directly to Minehut.
     """,
     """
+        <b><gradient:#9bd9f2:#578a9e>POKE <#56889C>Rules</#56889C><reset>
+
         <b>4. No advertising</b>
 
         Please do not advertise other servers, Discord servers, websites, etc.
     """,
     """
+        <b><gradient:#9bd9f2:#578a9e>POKE <#56889C>Rules</#56889C><reset>
+
         <b>5. No hacking</b>
 
         Please don't hack.
@@ -104,6 +116,8 @@ all = [
         By hacking, you prove to everyone that you're a noob and incapable of playing a game like a normal person. <3
     """,
     """
+        <b><gradient:#9bd9f2:#578a9e>POKE <#56889C>Rules</#56889C><reset>
+
         <b>6. No abusing bugs or exploits</b>
 
         If you find a bug or exploit anywhere in Poke, please let us know and don't abuse them.
