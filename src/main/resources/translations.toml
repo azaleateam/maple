@@ -23,13 +23,13 @@ all = [
     """
 
 
-        <discord>★ <st>                                                              </st> <discord>★</discord>
+        <#7289da>★ <st>                                                              </st> <#7289da>★</discord>
            <#7eb8d6><b>DISCORD</b></#7eb8d6>
 
-          <white>| <gray>Our community is on <discord>[{discord}]</discord>!</gray>
+          <white>| <gray>Our community is on <#7289da>[{discord}]</discord>!</gray>
           <white>| <gray>Join us for updates, giveaways and give us feedback!</gray>
 
-        <discord>★ <st>                                                              </st> <discord>★</discord>
+        <#7289da>★ <st>                                                              </st> <#7289da>★</discord>
 
     """,
     """
