@@ -44,3 +44,26 @@ fun setServerName(player: CommandSender, name: String) = maplePlugin.launch (map
 
     player.sendMessage("Server name set to $name")
 }
+
+fun setMinehutInfo(player: CommandSender, name: String, id: String) = maplePlugin.launch(maplePlugin.asyncDispatcher) {
+    if (!player.isOp) return@launch
+
+    val database = Database.getIron()
+
+    try {
+        suspend fun setServerSetting(key: String, value: String) {
+            database.prepare(" INSERT OR REPLACE INTO server_settings (key, value) VALUES (:key, :value)", bind {
+                "key" to key
+                "value" to value
+            })
+        }
+
+        setServerSetting("minehut_name", name)
+        setServerSetting("minehut_id", id)
+
+        player.sendMessage("Server ID set to $id, server name set to $name")
+    } catch (e: Exception) {
+        player.sendMessage("An error occurred while updating server settings.")
+        e.printStackTrace()
+    }
+}
