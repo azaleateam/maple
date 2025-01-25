@@ -10,3 +10,10 @@ fun formatDate(instant: Instant): String {
         .withZone(ZoneId.systemDefault())
     return formatter.format(instant)
 }
+
+fun formatDateWithSeconds(instant: Instant): String {
+    if(instant == Instant.MAX) return "Never"
+    val formatter = DateTimeFormatter.ofPattern("MM/dd/uuuu HH:mm:ss")
+        .withZone(ZoneId.systemDefault())
+    return formatter.format(instant)
+}
