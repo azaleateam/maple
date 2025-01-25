@@ -17,9 +17,9 @@ import org.bukkit.command.CommandSender
 import team.azalea.maple.maplePlugin
 import team.azalea.maple.messageUtil
 import team.azalea.maple.punishments.*
+import team.azalea.maple.util.fixString
 import team.azalea.maple.util.formatDate
 import team.azalea.maple.util.mm
-import team.azalea.maple.util.replaceTabs
 import team.azalea.maple.util.sendKey
 
 fun punishment(
@@ -64,7 +64,7 @@ fun punishment(
     val overviewPage = messageUtil
         .translate("punishments.commands.view.overview", placeholders)
         .trimIndent()
-        .replaceTabs()
+        .fixString()
         .mm()
 
     pages.add(overviewPage)
@@ -79,7 +79,7 @@ fun punishment(
                 placeholders.plus("notes" to notes.replace("\n", "<newline>"))
             )
             .trimIndent()
-            .replaceTabs()
+            .fixString()
             .mm()
         pages.add(notesPage)
     }
@@ -101,7 +101,7 @@ fun punishment(
                 newPlaceholders
             )
             .trimIndent()
-            .replaceTabs()
+            .fixString()
             .mm()
         pages.add(revertedPage)
     }

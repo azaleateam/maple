@@ -18,8 +18,8 @@ import org.bukkit.command.CommandSender
 import team.azalea.maple.maplePlugin
 import team.azalea.maple.messageUtil
 import team.azalea.maple.punishments.*
+import team.azalea.maple.util.fixString
 import team.azalea.maple.util.mm
-import team.azalea.maple.util.replaceTabs
 import team.azalea.maple.util.sendKey
 
 fun punishments(
@@ -43,7 +43,7 @@ fun punishments(
         val type = PunishmentTypes.entries[it.type]
         val text = it.getReasonString()
         "<hover:show_text:'<p>View ${type.name.lowercase()} information</p>'><click:run_command:/punishment ${it.id}>$text</click></hover>"
-    }.trimIndent().replaceTabs()
+    }.trimIndent().fixString()
 
     val allPlaceholders = placeholders.plus("punishments" to punishments)
     val message = messageUtil

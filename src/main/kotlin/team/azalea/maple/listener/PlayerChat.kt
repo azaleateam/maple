@@ -57,10 +57,10 @@ class PlayerChatListener : Listener {
         val filterResult = chatFilterInstance.validateMessage(player, message)
         val filterRuleset = filterResult.ruleset
         val filterAction = filterRuleset?.action
+        val serverName = Database.getServerName()
 
         if (filterAction == FilterAction.BLOCK || filterAction == FilterAction.BAN) {
             event.isCancelled = true
-            val serverName = Database.getServerName()
 
             maplePlugin.logger.info("$name triggered the filter with message: $message")
 
@@ -129,6 +129,7 @@ class PlayerChatListener : Listener {
                 "rank" to playerRank,
                 "message" to message,
                 "timestamp" to timestamp,
+                "server" to serverName,
             ))
 
             channel.sendMessage(parsedMsg).queue()

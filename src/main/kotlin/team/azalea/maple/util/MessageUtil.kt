@@ -43,6 +43,8 @@ class MessageUtil private constructor(private val translations: Toml) {
      */
     fun getString(key: String): String = translations.getString("en.$key") ?: key
 
+    fun getList(key: String): List<String> = translations.getList("en.$key")
+
     /**
      * Gets the colors inside the translations file.
      *
