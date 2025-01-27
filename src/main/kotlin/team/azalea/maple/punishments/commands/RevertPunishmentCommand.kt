@@ -46,7 +46,7 @@ private fun sendLog(punishment: PunishmentData, moderator: User) {
         }
 
     useBot {
-        val discordLogChannel = it.getTextChannelById(discordConfig.channels.log.toLong())
+        val discordLogChannel = it.getTextChannelById(discordConfig.channels.filterLog.toLong())
             ?: throw Exception("Failed to find logs channel")
 
         maplePlugin.launch(maplePlugin.asyncDispatcher) {

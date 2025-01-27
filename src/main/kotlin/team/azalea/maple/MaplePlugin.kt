@@ -13,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import team.azalea.maple.discord.Discord
 import team.azalea.maple.listener.PlayerChatListener
 import team.azalea.maple.punishments.Punishments
+import team.azalea.maple.reports.Reports
 import team.azalea.maple.types.GamemodeType
 import team.azalea.maple.util.*
 
@@ -42,6 +43,7 @@ class MaplePlugin : SuspendingJavaPlugin() {
         miniMessage = MapleMiniMessage().build()
 
         Punishments.setup()
+        Reports.setup()
         Discord.load()
         registerListeners()
         startBroadcasts()

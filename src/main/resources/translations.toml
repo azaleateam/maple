@@ -296,3 +296,28 @@ confirm = """
 """
 success = "{success} Successfully punished player."
 error = "{error} {reason}"
+
+[en.commands.report]
+initial = """
+             <pr>Username:</pr>
+             {player}
+
+             <pr>What are you reporting for? (p.{current_page})</pr>
+             {reports}
+"""
+confirm = """
+             <pr>Username:</pr>
+             {player}
+
+             <pr>You are reporting this player for:</pr>
+             {reason}
+
+             <pr>Confirm & Report:</pr>
+
+             <dark_green><click:run_command:/report {player} {short} confirm>ISSUE</click></dark_green>
+
+             <dark_red><click:run_command:/report {player} {short} cancel>CANCEL</click></dark_red>
+"""
+success = "{success} Successfully reported player."
+log = "<s>[Reports] <p>{player}</p> reported {target} - <red>{reason}</red>"
+error = "{error} {reason}"

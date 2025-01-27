@@ -1,0 +1,5 @@
+[reports.hacking]
+reason = "Hacking"
+
+[reports.discrimination]
+reason = "Discrimination"

@@ -26,7 +26,8 @@ data class MessageContent(
 
 data class Channels(
     val main: String,
-    val log: String
+    val filterLog: String,
+    val punishLog: String,
 )
 
 lateinit var discordConfig: DiscordConfig

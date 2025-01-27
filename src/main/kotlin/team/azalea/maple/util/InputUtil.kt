@@ -3,11 +3,13 @@ package team.azalea.maple.util
 import io.papermc.paper.event.player.AsyncChatEvent
 import me.honkling.commonlib.lib.scheduleTemporarily
 import org.bukkit.entity.Player
-import java.util.EventListener
 
 typealias PromptHandler = (String) -> Unit
 
-fun isConfirmed (input: String): Boolean = input.equals("yes", true) || input.equals("y", true) || input.equals("confirm", true)
+fun isConfirmed (input: String?): Boolean {
+    if(input == null) return false
+    return input.equals("yes", true) || input.equals("y", true) || input.equals("confirm", true)
+}
 
 object InputHandler {
     internal val usingUnfilteredInput = mutableMapOf<Player, Boolean>()

@@ -350,7 +350,7 @@ data class Punishment(
         maplePlugin.logger.info("Player ${player.name} was ${getPluralType()} by ${moderator.name} for $reason (Punishment ID: $id)")
 
         useBot {
-            val discordLogChannel = it.getTextChannelById(discordConfig.channels.log.toLong())
+            val discordLogChannel = it.getTextChannelById(discordConfig.channels.punishLog.toLong())
                 ?: throw Exception("Failed to find #punish-logs channel")
 
             val (shortReason) = getReasonInfo(this.reason)

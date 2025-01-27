@@ -154,9 +154,10 @@ fun punish(
         return@launch
     }
 
-    if(short.toString().isNotBlank() && confirm !== null && isConfirmed(confirm)) {
+    if(isConfirmed(confirm)) {
         finishPunishment(executorUser, targetUser, short.toString())
-    } else if(short.toString().isNotBlank()) {
-        confirmPunishment(executorUser, targetUser, short.toString())
+        return@launch
     }
+
+    confirmPunishment(executorUser, targetUser, short.toString())
 }
